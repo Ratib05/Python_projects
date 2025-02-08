@@ -7,18 +7,25 @@ This Python project evaluates password strength based on length, uppercase and l
 ## Key Features:
 
 Uses regex to check password complexity.
+
 Scores passwords based on security factors.
+
 Provides real-time feedback on password strength.
 
 ## Skills Demonstrated:
 
 Regular expressions (re module).
+
 String manipulation and pattern matching.
+
 Conditional logic for security assessments.
+
 Basic user interaction via command-line input.
 
 ## Tools & Technologies Used:
 
 Python
+
 re (regular expressions)
+
 Command-line interface

@@ -1,21 +1,24 @@
-# HOME-LAB SETUP AND BASIC SCAN
+# PASSWORD STRENGTH CHECKER
 
 ## Objective
 
-The Home Lab and basic scan project aimed to establish a controlled environment for simulating and detecting cyber attacks. The primary focus was to set up Kali Linux and Ubuntu virtual machines to have an isolated environment where I could simulate attacks, practice cybersecurity techniques, and conduct cybersecurity projects. This hands-on experience was designed to deepen my understanding of network security, attack patterns, and defensive strategies.
+This Python project evaluates password strength based on length, uppercase and lowercase letters, digits, and special characters. It assigns a strength level—Weak, Medium, or Strong—based on predefined criteria.
 
-### Skills Learned
+## Key Features:
 
-- Nmap commands
-- Using kali Linux 
-- Using ubuntu
-- Setting up network connectivity between two devices/ virtual devices
+Uses regex to check password complexity.
+Scores passwords based on security factors.
+Provides real-time feedback on password strength.
 
-### Tools Used
+## Skills Demonstrated:
 
-- Kali Linux - cybersecurity-focused Linux distribution
-- Ubuntu - Linux distribution
-- Nmap - vulnerability assessment/ analysis
-- Vmware fusion - virtual machine tool
+Regular expressions (re module).
+String manipulation and pattern matching.
+Conditional logic for security assessments.
+Basic user interaction via command-line input.
 
-## Steps
+## Tools & Technologies Used:
+
+Python
+re (regular expressions)
+Command-line interface

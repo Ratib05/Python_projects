@@ -16,7 +16,7 @@ if os.path.exists(folder_path):
         _, file_extention = os.path.splitext(file)
 
         # If file extension variable matches .jpg
-        if file_extention.lower() == ".jpg":
+        if os.path.isfile(file_path) and file_extension.lower() == ".jpg":
             os.remove(file_path)
-            print("Deleted {file}")
+            print(f"Deleted {file}")
     print("Images deleted")

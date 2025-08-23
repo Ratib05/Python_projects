@@ -17,7 +17,19 @@ unit = ctk.CTkOptionMenu(
     )
 unit.pack(pady=5, padx=5)
 
+unit2 = ctk.CTkOptionMenu(
+    root, variable=unit_var, values=["CentiMeters","Meters", "Kilometres"]
+    )
+unit2.pack(pady=5, padx=5)
+
+
+label = ctk.CTkLabel(root, text="Enter number according the the unit selected.")
+label.pack(pady=9, padx=5)
+
 entry = ctk.CTkEntry(root, textvariable=value_var) # creates an entry widget
 entry.pack(pady=10, padx=5)
+
+convertbutton = ctk.CTkButton(root, text="convert", command=convert)
+convertbutton.pack(padx=10, pady=10)
 
 root.mainloop()

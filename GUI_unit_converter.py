@@ -12,6 +12,7 @@ toUnit = ctk.StringVar(master=root, value="Meters")
 result_var = ctk.StringVar(master=root, value="")   # NEW: will show result in the UI
 
 def convert():
+    result = 0
     x = float(value_var.get())
     u1 = fromUnit.get()
     u2 = toUnit.get()
@@ -20,6 +21,18 @@ def convert():
         result_var.set(result)
     elif u1 == "CentiMeters" and u2 == "Kilometres":
         result = x/100000
+        result_var.set(result)
+    elif u1 == "Meters" and u2 == "CentiMeters":
+        result = x*100
+        result_var.set(result)
+    elif u1 == "Meters" and u2 == "kilometres":
+        result = x/1000
+        result_var.set(result)
+    elif u1 == "kilometres" and u2 == "CentiMeters":
+        result = x*100000
+        result_var.set(result)
+    elif u1 == "kilometres" and u2 == "Meters":
+        result = x/1000
         result_var.set(result)
 
 unit = ctk.CTkOptionMenu(

@@ -28,11 +28,11 @@ def convert():
     elif u1 == "Meters" and u2 == "kilometres":
         result = x/1000
         result_var.set(result)
-    elif u1 == "kilometres" and u2 == "CentiMeters":
+    elif u1 == "Kilometres" and u2 == "CentiMeters":
         result = x*100000
         result_var.set(result)
-    elif u1 == "kilometres" and u2 == "Meters":
-        result = x/1000
+    elif u1 == "Kilometres" and u2 == "Meters":
+        result = x*1000
         result_var.set(result)
 
 unit = ctk.CTkOptionMenu(

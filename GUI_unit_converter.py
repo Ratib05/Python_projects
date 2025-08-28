@@ -46,12 +46,15 @@ def swap_units():
 unit = ctk.CTkOptionMenu(
     root, variable=fromUnit, values=["CentiMeters","Meters", "Kilometres"]
     )
-unit.grid(row=0, column=0, padx=5, pady=5)
+unit.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
 
 unit2 = ctk.CTkOptionMenu(
     root, variable=toUnit, values=["CentiMeters","Meters", "Kilometres"]
     )
-unit2.grid(row=0, column=2, pady=5, padx=5)
+unit2.grid(row=0, column=2, pady=5, padx=5, sticky="ew")
+
+swap_btn = ctk.CTkButton(root, text="⇆ Swap", command=swap_units)
+swap_btn.grid(row=0, column=1)
 
 unit.grid_columnconfigure(0, weight=1)
 unit.grid_columnconfigure(1, weight=1)

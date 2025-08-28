@@ -19,9 +19,8 @@ This program lets you quickly convert between **Centimeters, Meters, and Kilomet
 1. Clone or download this repo  
 2. Make sure you have Python 3.10+ installed  
 3. Install CustomTkinter:  
-   ```bash
+
    pip install customtkinter
-````
 
 4. Run the program:
 

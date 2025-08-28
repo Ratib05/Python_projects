@@ -12,28 +12,28 @@ toUnit = ctk.StringVar(master=root, value="Meters")
 result_var = ctk.StringVar(master=root, value="")   # NEW: will show result in the UI
 
 def convert():
-    result = 0
-    x = float(value_var.get())
-    u1 = fromUnit.get()
-    u2 = toUnit.get()
-    if u1 == "CentiMeters" and u2 == "Meters":
-        result = x/100
-        result_var.set(result)
-    elif u1 == "CentiMeters" and u2 == "Kilometres":
-        result = x/100000
-        result_var.set(result)
-    elif u1 == "Meters" and u2 == "CentiMeters":
-        result = x*100
-        result_var.set(result)
-    elif u1 == "Meters" and u2 == "kilometres":
-        result = x/1000
-        result_var.set(result)
-    elif u1 == "Kilometres" and u2 == "CentiMeters":
-        result = x*100000
-        result_var.set(result)
-    elif u1 == "Kilometres" and u2 == "Meters":
-        result = x*1000
-        result_var.set(result)
+    try:
+        result = 0
+        x = float(value_var.get())
+        u1 = fromUnit.get().lower()
+        u2 = toUnit.get().lower()
+        
+        factors = {
+            ("centiMeters", "meters"): 0.01,
+            ("centiMeters", "kilometres"): 0.00001,
+            ("meters", "centiMeters"): 100,
+            ("meters", "kilometres"): 0.001,
+            ("kilometres", "centiMeters"): 100000,
+            ("kilometres", "meters"): 1000
+        }
+
+        if (u1, u2) in factors:
+            result = x * factors[(u1, u2)]
+            result_var.set(result)
+        else:
+            result_var.set("Invalid units")
+    except:
+        result_var.set("Enter a number")
 
 unit = ctk.CTkOptionMenu(
     root, variable=fromUnit, values=["CentiMeters","Meters", "Kilometres"]

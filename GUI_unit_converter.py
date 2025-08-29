@@ -10,6 +10,7 @@ value_var = ctk.StringVar(master=root) # variable to hold the input value
 fromUnit = ctk.StringVar(master=root, value="Meters")
 toUnit = ctk.StringVar(master=root, value="Meters")
 result_var = ctk.StringVar(master=root, value="")   # NEW: will show result in the UI
+button_pressed = False
 
 def convert():
     try:
@@ -40,8 +41,11 @@ def convert():
 
 
 def swap_units():
-    fromUnit.set(toUnit.get())
-    toUnit.set(fromUnit.get())
+    left = fromUnit.get()
+    right = toUnit.get()
+    toUnit.set(left)
+    fromUnit.set(right)
+    convert()
 
 unit = ctk.CTkOptionMenu(
     root, variable=fromUnit, values=["CentiMeters","Meters", "Kilometres"]
@@ -56,8 +60,9 @@ unit2.grid(row=0, column=2, pady=5, padx=5, sticky="ew")
 swap_btn = ctk.CTkButton(root, text="⇆ Swap", command=swap_units)
 swap_btn.grid(row=0, column=1)
 
-unit.grid_columnconfigure(0, weight=1)
-unit.grid_columnconfigure(1, weight=1)
+root.grid_columnconfigure(0, weight=1)
+root.grid_columnconfigure(1, weight=1)
+root.grid_columnconfigure(2, weight=1)
 
 label = ctk.CTkLabel(root, text="Enter number according the the unit selected.")
 label.grid(row=1, column=1, pady=9, padx=5)
@@ -71,5 +76,11 @@ convertbutton.grid(row=3, column=1, padx=10, pady=10)
 result_label = ctk.CTkLabel(root, textvariable=result_var, text=toUnit, 
                             font=ctk.CTkFont(size=18, weight="bold"))
 result_label.grid(row=4, column=1, pady=8)
+
+clear_btn = ctk.CTkButton(root, text="clear", command=lambda: [result_var.set(""), clear_btn.grid_remove()])
+
+
+if button_pressed == True:
+    clear_btn.grid(row=5, column=1, pady=5)
 
 root.mainloop()

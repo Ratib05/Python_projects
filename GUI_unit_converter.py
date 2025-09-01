@@ -1,4 +1,5 @@
 import customtkinter as ctk
+import tkinter as tk
 
 root = ctk.CTk() # creates the main window
 
@@ -10,11 +11,12 @@ value_var = ctk.StringVar(master=root) # variable to hold the input value
 fromUnit = ctk.StringVar(master=root, value="Meters")
 toUnit = ctk.StringVar(master=root, value="Meters")
 result_var = ctk.StringVar(master=root, value="")   # NEW: will show result in the UI
-button_pressed = False
+button_pressed = tk.BooleanVar(value=False)
 
 def convert():
     try:
         result = 0
+        button_pressed.set(True)
         x = float(value_var.get())
         u1 = fromUnit.get().lower()
         u2 = toUnit.get().lower()
@@ -36,8 +38,15 @@ def convert():
             result_var.set(f"{result:.6g} {toUnit.get()}")
         else:
             result_var.set("Invalid units")
-    except:
+
+        #CHG: show Clear button after any convert attempt
+        if not clear_btn.winfo_ismapped():
+            clear_btn.grid(row=5, column=1, pady=5)
+        
+    except ValueError:                                   # CHG: specific exception
         result_var.set("Enter a number")
+        if not clear_btn.winfo_ismapped():               # CHG: show even on error
+            clear_btn.grid(row=5, column=1, pady=5)
 
 
 def swap_units():
@@ -68,7 +77,7 @@ label = ctk.CTkLabel(root, text="Enter number according the the unit selected.")
 label.grid(row=1, column=1, pady=9, padx=5)
 
 entry = ctk.CTkEntry(root, textvariable=value_var) # creates an entry widget
-entry.grid(row=2, column=1, pady=10, padx=5)
+entry.grid(row=2, column=1, pady=10, padx=5, sticky="ew")
 
 convertbutton = ctk.CTkButton(root, text="convert", command=convert)
 convertbutton.grid(row=3, column=1, padx=10, pady=10)

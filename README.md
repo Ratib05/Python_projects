@@ -1,7 +1,3 @@
-# Python_projects
-Got it ✅ — here’s a clean `README.md` for your **`Python_projects`** repo, tailored to showcase the projects you just merged. You can paste this directly into the repo root as `README.md`:
-
-````markdown
 # 🐍 Python Projects Monorepo
 
 This repository collects several standalone Python projects into one place.  

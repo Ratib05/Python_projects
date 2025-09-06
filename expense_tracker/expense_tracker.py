@@ -33,4 +33,9 @@ month.grid(row=2, column=3, sticky="ew")
 subtitle = ctk.CTkLabel(root, text="Expenses list")
 subtitle.grid(row=3, column=0)
 
+expenses_list = ctk.CTkFrame(root)
+expenses_list.pack(row=4)
+
+
+
 root.mainloop()

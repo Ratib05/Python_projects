@@ -1,0 +1,215 @@
+Perfect 👍
+Here’s your **CustomTkinter Expense Tracker Cheat Sheet** — compact, complete, and easy to study.
+
+---
+
+## 🏠 **Window (CTk)**
+
+**What:** Main app window.
+**Rules:**
+
+* Only one per app.
+* Must call `mainloop()` at end.
+* Use `set_appearance_mode()` and `set_default_color_theme()` before creating it.
+
+**Main attributes:**
+
+* `title("...")` – sets window name.
+* `geometry("800x600")` – size.
+* `resizable(x, y)` – allow resizing.
+* `iconbitmap("icon.ico")` – set icon (Windows only).
+
+---
+
+## 📦 **Frame (CTkFrame)**
+
+**What:** Container to group widgets.
+**Rules:**
+
+* Can mix `pack`, `grid`, `place` across different frames, **not inside the same one**.
+* Use for sections like forms, headers, or lists.
+
+**Main attributes:**
+
+* `corner_radius` – round corners.
+* `fg_color` – background color (None = transparent).
+* `border_width` – outline thickness.
+* `border_color` – outline color.
+
+---
+
+## 🧱 **Label (CTkLabel)**
+
+**What:** Text display.
+**Rules:**
+
+* Static text only (no editing).
+
+**Main attributes:**
+
+* `text` – label text.
+* `font=("Arial", 14)` – text style.
+* `text_color="white"` – color.
+* `anchor="w"` – alignment (w,e,center).
+
+---
+
+## ✍️ **Entry (CTkEntry)**
+
+**What:** Single-line input.
+**Rules:**
+
+* Attach a `StringVar` for reading/writing values easily.
+
+**Main attributes:**
+
+* `textvariable=var` – binds variable.
+* `placeholder_text="Enter amount"` – faded hint.
+* `width` – entry size.
+* `state="disabled"` – lock editing.
+* `.get()` and `.delete(0, "end")` to read/clear.
+
+---
+
+## 🔘 **Button (CTkButton)**
+
+**What:** Executes commands.
+**Rules:**
+
+* Needs a `command=function` to work.
+
+**Main attributes:**
+
+* `text` – label text.
+* `command` – callback function.
+* `fg_color`, `hover_color` – button colors.
+* `corner_radius` – round edges.
+* `state="disabled"` – disable temporarily.
+
+---
+
+## 📂 **Option Menu (CTkOptionMenu)**
+
+**What:** Dropdown menu.
+**Rules:**
+
+* Use with a `StringVar` to store selection.
+
+**Main attributes:**
+
+* `values=["Food","Transport","Bills"]` – dropdown options.
+* `variable=var` – bind variable.
+* `.set("Food")` – default value.
+
+---
+
+## 🧾 **Textbox (CTkTextbox)**
+
+**What:** Multi-line text area.
+**Rules:**
+
+* Use `.get("1.0","end")` to read.
+* `.insert("1.0", "text")` to write.
+
+**Main attributes:**
+
+* `height`, `width` – size.
+* `state="disabled"` – make read-only.
+
+---
+
+## 📋 **Tabview (CTkTabview)**
+
+**What:** Tabbed pages.
+**Rules:**
+
+* Add tabs before placing widgets inside them.
+
+**Main attributes:**
+
+* `.add("Tab Name")` – create tab.
+* `.set("Tab Name")` – open a tab programmatically.
+* `.tab("Tab Name")` – access tab frame.
+
+---
+
+## 📜 **Scrollable Frame (CTkScrollableFrame)**
+
+**What:** Frame with vertical scrolling.
+**Rules:**
+
+* Great for showing expense rows or lists.
+* Use `.grid()` inside it.
+
+**Main attributes:**
+
+* `label_text` – optional title.
+* `.scrollbar` – auto-handled.
+
+---
+
+## 🔢 **Variables (StringVar, IntVar, DoubleVar, BooleanVar)**
+
+**What:** Special linked values for widgets.
+**Rules:**
+
+* Use `StringVar` for text/entries, `DoubleVar` for numbers, etc.
+
+**Main methods:**
+
+* `.get()` – get value.
+* `.set(value)` – update value.
+
+---
+
+## ⚙️ **Layout Managers**
+
+### `.pack()`
+
+* Simple vertical or horizontal stacking.
+* Options: `side`, `fill`, `expand`, `padx`, `pady`.
+
+### `.grid()`
+
+* Place widgets in a table.
+* Options: `row`, `column`, `sticky`, `padx`, `pady`.
+* Configure columns: `frame.grid_columnconfigure(col, weight=1)` for stretch.
+
+### `.place()`
+
+* Exact positioning (`x`, `y`). Not usually needed.
+
+**⚠ Rule:**
+
+> Never mix `pack()` and `grid()` in the same parent widget.
+
+---
+
+## 🎨 **Appearance & Theme**
+
+**Functions:**
+
+* `set_appearance_mode("dark"|"light"|"system")`
+* `set_default_color_theme("blue"|"green"|"dark-blue"|path_to_json)`
+
+**Widget colors:**
+
+* `fg_color` – background.
+* `text_color` – text.
+* `hover_color` – hover state.
+* `border_color` – frame/button border.
+
+---
+
+## 🧩 **Event Basics**
+
+* `command=function` – attach to buttons/menus.
+* `.bind("<Return>", func)` – keyboard shortcuts.
+* Validation example for Entry:
+
+  ```python
+  def only_number(text):
+      return text.isdigit() or text == ""
+  vcmd = (root.register(only_number), "%P")
+  entry.configure(validate="key", validatecommand=vcmd)
+  ```

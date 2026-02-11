@@ -23,34 +23,40 @@ def add_expense():
 def del_expense():
     pass
 
+def select_expense():
+    pass
+
 # ===== HEADER SECTION =====
 # Main title label with bold, larger font
 title = ctk.CTkLabel(root, text="Simple expense tracker", font=ctk.CTkFont(size=18, weight="bold"), text_color="black")
 title.grid(row=0, sticky="ew")  # Stretch horizontally across the window
 
+summary_section = ctk.CTkFrame(root, fg_color="white")
+summary_section.grid(row=2, column=0, columnspan=3, sticky="ew")
+
 # ===== BUTTON SECTION =====
 # Button to add a new expense entry
-add = ctk.CTkButton(root, text="Add expense", command=add_expense)
+add = ctk.CTkButton(summary_section, text="Add expense", command=add_expense)
 add.grid(row=1, column=0, sticky="ew", padx=10, pady=10)  # Place in row 1, column 0
 
 # Button to manage expense categories (e.g., Food, Transport, etc.)
-manage = ctk.CTkButton(root, text="manage categories", command=add_expense)
+manage = ctk.CTkButton(summary_section, text="manage categories", command=add_expense)
 manage.grid(row=1, column=1, sticky="ew", padx=10, pady=10)  # Place in row 1, column 1
 
 # ===== SUMMARY SECTION =====
 # Label to display today's total expenses
 # TODO: Calculate and display today's expenses
-today = ctk.CTkLabel(root, text="Today $0.00", text_color="black")
+today = ctk.CTkLabel(summary_section, text="Today $0.00", text_color="black")
 today.grid(row=2, column=0, sticky="ew")
 
 # Label to display this week's total expenses
 # TODO: Calculate and display week's expenses
-this_week = ctk.CTkLabel(root, text="This week $0.00", text_color="black")
+this_week = ctk.CTkLabel(summary_section, text="This week $0.00", text_color="black")
 this_week.grid(row=2, column=1, sticky="ew")
 
 # Label to display this month's total expenses
 # TODO: Calculate and display month's expenses
-month = ctk.CTkLabel(root, text="This month $0.00", text_color="black")
+month = ctk.CTkLabel(summary_section, text="This month $0.00", text_color="black")
 month.grid(row=2, column=3, sticky="ew")
 
 # ===== EXPENSES LIST SECTION =====
@@ -65,22 +71,28 @@ expenses_list.grid(row=4, column=0, columnspan=4, sticky="ew")  # Span across 4 
 # ===== EXPENSES LIST HEADERS =====
 # Header: Date column
 expense_date = ctk.CTkLabel(expenses_list, text="Date", text_color="black")
-expense_date.grid(row=0, column=0, padx=10, )
+expense_date.grid(row=0, column=0, padx=10, stick="ew")
 
 # Header: Category column (e.g., Food, Rent, etc.)
 expense_category = ctk.CTkLabel(expenses_list, text="Category", text_color="black")
-expense_category.grid(row=0, column=1, padx=10)
+expense_category.grid(row=0, column=1, padx=10, stick="ew")
 
 # Header: Amount column (expense value)
 expense_amount = ctk.CTkLabel(expenses_list, text="Amount", text_color="black")
-expense_amount.grid(row=0, column=2, padx=10)
+expense_amount.grid(row=0, column=2, padx=10, stick="ew")
 
 # Header: Note column (optional description)
 expense_note = ctk.CTkLabel(expenses_list, text="Note", text_color="black")
-expense_note.grid(row=0, column=3, padx=10)
+expense_note.grid(row=0, column=3, padx=10, stick="ew")
 
-select = ctk.CTkLabel(root, text="Select", text_color="black")
+select = ctk.CTkButton(root, text="Select", text_color="black", command=select_expense)
 select.grid(row=5, column=0, padx=10, pady=10)
+
+delete = ctk.CTkButton(root, text="Delete", text_color="black", command=del_expense)
+delete.grid(row=5, column=1, padx=10, pady=10)
+
+graph_section = ctk.CTkFrame(root, fg_color="white")
+graph_section_section.grid(row=6, column=0, columnspan=1, sticky="ew")
 
 # Start the application event loop
 root.mainloop()

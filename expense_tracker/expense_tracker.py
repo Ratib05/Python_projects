@@ -14,7 +14,10 @@ root.geometry("500x500")
 root.configure(fg_color="grey")  # Change this to your desired color
 
 # Function to handle adding a new expense
-# TODO: Implement logic to add expense to database/storage
+# TO DO: Implement logic to add expense to database/storage
+
+expenses_list = []
+
 def add_expense():
     pass
 
@@ -92,7 +95,7 @@ delete = ctk.CTkButton(root, text="Delete", text_color="black", command=del_expe
 delete.grid(row=5, column=1, padx=10, pady=10)
 
 graph_section = ctk.CTkFrame(root, fg_color="white")
-graph_section_section.grid(row=6, column=0, columnspan=1, sticky="ew")
+graph_section.grid(row=6, columnspan=3)
 
 # Start the application event loop
 root.mainloop()

@@ -1,5 +1,6 @@
 # Import the customtkinter library for modern UI components
 import customtkinter as ctk
+import datetime as dt
 
 # Create the main application window
 root = ctk.CTk()
@@ -16,8 +17,12 @@ root.configure(fg_color="grey")  # Change this to your desired color
 # Function to handle adding a new expense
 # TO DO: Implement logic to add expense to database/storage
 
-expenses_list = []
-
+expenses_list = {
+    "date": {"type": lambda s: s, "required": True},
+    "category": {"type": str, "required": True},
+    "amount": {"type": float, "required": True},
+    "note": {"type": str, "required": False, "default": ""},
+}
 def add_expense():
     pass
 

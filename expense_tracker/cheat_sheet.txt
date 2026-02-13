@@ -19,6 +19,18 @@ Here’s your **CustomTkinter Expense Tracker Cheat Sheet** — compact, complet
 * `resizable(x, y)` – allow resizing.
 * `iconbitmap("icon.ico")` – set icon (Windows only).
 
+**Example:**
+
+```python
+import customtkinter as ctk
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("blue")
+root = ctk.CTk()
+root.title("My App")
+root.geometry("800x600")
+root.mainloop()
+```
+
 ---
 
 ## 📦 **Frame (CTkFrame)**
@@ -36,6 +48,13 @@ Here’s your **CustomTkinter Expense Tracker Cheat Sheet** — compact, complet
 * `border_width` – outline thickness.
 * `border_color` – outline color.
 
+**Example:**
+
+```python
+frame = ctk.CTkFrame(root, fg_color="lightblue", corner_radius=10)
+frame.grid(row=0, column=0, padx=10, pady=10)
+```
+
 ---
 
 ## 🧱 **Label (CTkLabel)**
@@ -51,6 +70,13 @@ Here’s your **CustomTkinter Expense Tracker Cheat Sheet** — compact, complet
 * `font=("Arial", 14)` – text style.
 * `text_color="white"` – color.
 * `anchor="w"` – alignment (w,e,center).
+
+**Example:**
+
+```python
+label = ctk.CTkLabel(root, text="Hello World", font=("Arial", 16, "bold"), text_color="black")
+label.grid(row=0, column=0)
+```
 
 ---
 
@@ -69,6 +95,15 @@ Here’s your **CustomTkinter Expense Tracker Cheat Sheet** — compact, complet
 * `state="disabled"` – lock editing.
 * `.get()` and `.delete(0, "end")` to read/clear.
 
+**Example:**
+
+```python
+var = ctk.StringVar()
+entry = ctk.CTkEntry(root, textvariable=var, placeholder_text="Enter text")
+entry.grid(row=0, column=0)
+value = entry.get()
+```
+
 ---
 
 ## 🔘 **Button (CTkButton)**
@@ -84,7 +119,17 @@ Here’s your **CustomTkinter Expense Tracker Cheat Sheet** — compact, complet
 * `command` – callback function.
 * `fg_color`, `hover_color` – button colors.
 * `corner_radius` – round edges.
-* `state="disabled"` – disable temporarily.
+* `state="disabled"` – disable temporarily. 
+
+**Example:**
+
+```python
+def on_click():
+    print("Button clicked")
+
+button = ctk.CTkButton(root, text="Click Me", command=on_click, fg_color="blue")
+button.grid(row=0, column=0)
+```
 
 ---
 
@@ -101,6 +146,16 @@ Here’s your **CustomTkinter Expense Tracker Cheat Sheet** — compact, complet
 * `variable=var` – bind variable.
 * `.set("Food")` – default value.
 
+**Example:**
+
+```python
+var = ctk.StringVar()
+menu = ctk.CTkOptionMenu(root, values=["Option 1", "Option 2"], variable=var)
+menu.set("Option 1")
+menu.grid(row=0, column=0)
+selected = var.get()
+```
+
 ---
 
 ## 🧾 **Textbox (CTkTextbox)**
@@ -115,6 +170,15 @@ Here’s your **CustomTkinter Expense Tracker Cheat Sheet** — compact, complet
 
 * `height`, `width` – size.
 * `state="disabled"` – make read-only.
+
+**Example:**
+
+```python
+textbox = ctk.CTkTextbox(root, height=100, width=200)
+textbox.grid(row=0, column=0)
+textbox.insert("1.0", "Sample text")
+content = textbox.get("1.0", "end")
+```
 
 ---
 
@@ -131,6 +195,18 @@ Here’s your **CustomTkinter Expense Tracker Cheat Sheet** — compact, complet
 * `.set("Tab Name")` – open a tab programmatically.
 * `.tab("Tab Name")` – access tab frame.
 
+**Example:**
+
+```python
+tabview = ctk.CTkTabview(root)
+tabview.add("Tab 1")
+tabview.add("Tab 2")
+tabview.grid(row=0, column=0)
+
+label = ctk.CTkLabel(tabview.tab("Tab 1"), text="Content for Tab 1")
+label.pack()
+```
+
 ---
 
 ## 📜 **Scrollable Frame (CTkScrollableFrame)**
@@ -146,9 +222,74 @@ Here’s your **CustomTkinter Expense Tracker Cheat Sheet** — compact, complet
 * `label_text` – optional title.
 * `.scrollbar` – auto-handled.
 
+**Example:**
+
+```python
+scroll_frame = ctk.CTkScrollableFrame(root, label_text="Scrollable List")
+scroll_frame.grid(row=0, column=0)
+
+for i in range(10):
+    label = ctk.CTkLabel(scroll_frame, text=f"Item {i}")
+    label.grid(row=i, column=0)
+```
+
 ---
 
-## 🔢 **Variables (StringVar, IntVar, DoubleVar, BooleanVar)**
+## �️ **Dialog Box (CTkToplevel for Input)**
+
+**What:** Modal popup for user input (e.g., add expense details).
+**Rules:**
+
+* Use `CTkToplevel` for custom input dialogs.
+* Make modal with `grab_set()` and `wait_window()`.
+
+**Example code:**
+
+```python
+class InputDialog(ctk.CTkToplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title("Add Expense")
+        self.geometry("300x200")
+        self.grab_set()
+        
+        self.label = ctk.CTkLabel(self, text="Amount:")
+        self.label.pack(pady=10)
+        self.entry = ctk.CTkEntry(self)
+        self.entry.pack(pady=10)
+        
+        self.ok_btn = ctk.CTkButton(self, text="OK", command=self.on_ok)
+        self.ok_btn.pack(side="left", padx=20)
+        self.cancel_btn = ctk.CTkButton(self, text="Cancel", command=self.on_cancel)
+        self.cancel_btn.pack(side="right", padx=20)
+        
+        self.result = None
+    
+    def on_ok(self):
+        self.result = self.entry.get()
+        self.destroy()
+    
+    def on_cancel(self):
+        self.result = None
+        self.destroy()
+
+# Usage in main app:
+def open_dialog():
+    dialog = InputDialog(app)
+    app.wait_window(dialog)
+    if dialog.result:
+        print(f"Input: {dialog.result}")
+```
+
+**Main attributes:**
+
+* `grab_set()` – blocks parent window.
+* `wait_window(dialog)` – waits for dialog close.
+* Access result via `dialog.result`.
+
+---
+
+## �🔢 **Variables (StringVar, IntVar, DoubleVar, BooleanVar)**
 
 **What:** Special linked values for widgets.
 **Rules:**
@@ -160,6 +301,14 @@ Here’s your **CustomTkinter Expense Tracker Cheat Sheet** — compact, complet
 * `.get()` – get value.
 * `.set(value)` – update value.
 
+**Example:**
+
+```python
+var = ctk.StringVar()
+var.set("Initial value")
+value = var.get()
+```
+
 ---
 
 ## ⚙️ **Layout Managers**
@@ -169,15 +318,40 @@ Here’s your **CustomTkinter Expense Tracker Cheat Sheet** — compact, complet
 * Simple vertical or horizontal stacking.
 * Options: `side`, `fill`, `expand`, `padx`, `pady`.
 
+**Example:**
+
+```python
+button1 = ctk.CTkButton(root, text="Button 1")
+button1.pack(side="top", fill="x", padx=10, pady=5)
+button2 = ctk.CTkButton(root, text="Button 2")
+button2.pack(side="top", fill="x", padx=10, pady=5)
+```
+
 ### `.grid()`
 
 * Place widgets in a table.
 * Options: `row`, `column`, `sticky`, `padx`, `pady`.
 * Configure columns: `frame.grid_columnconfigure(col, weight=1)` for stretch.
 
+**Example:**
+
+```python
+label1 = ctk.CTkLabel(root, text="Label 1")
+label1.grid(row=0, column=0, sticky="w", padx=5, pady=5)
+label2 = ctk.CTkLabel(root, text="Label 2")
+label2.grid(row=0, column=1, sticky="e", padx=5, pady=5)
+```
+
 ### `.place()`
 
 * Exact positioning (`x`, `y`). Not usually needed.
+
+**Example:**
+
+```python
+button = ctk.CTkButton(root, text="Button")
+button.place(x=50, y=50)
+```
 
 **⚠ Rule:**
 
@@ -198,6 +372,14 @@ Here’s your **CustomTkinter Expense Tracker Cheat Sheet** — compact, complet
 * `text_color` – text.
 * `hover_color` – hover state.
 * `border_color` – frame/button border.
+
+**Example:**
+
+```python
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("blue")
+button = ctk.CTkButton(root, fg_color="red", hover_color="darkred")
+```
 
 ---
 

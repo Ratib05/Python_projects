@@ -24,7 +24,54 @@ expenses_list = {
     "note": {"type": str, "required": False, "default": ""},
 }
 def add_expense():
-    pass
+    dialog1 = ctk.CTkToplevel(root)
+    dialog1.title("Date")
+    dialog1.geometry("300x150")
+
+    var1 = ctk.StringVar()
+    date = ctk.CTkEntry(dialog1, placeholder_text= "Date of enxpense")
+    date.grid(row=1, column=1)
+    
+    ok_btn = ctk.CTkButton(dialog1, text="OK", command=lambda:dialog1.destroy)
+    ok_btn.grid(row=2, column=2)
+
+
+    root.wait_window(dialog1)
+    value1 = date.get()
+
+    
+
+    dialog2 = ctk.CTkToplevel(root)
+    dialog2.title("Category")
+    dialog2.geometry("300x150")
+
+    var2 = ctk.StringVar()
+    
+    # CHANGE TO DROPDOWN MENU
+    #category = ctk.CTkEntry(dialog2, placeholder_text= "Date of enxpense")
+    #value2 = category.get()
+
+
+
+    dialog3 = ctk.CTkToplevel(root)
+    dialog3.title("Amount")
+    dialog3.geometry("300x150")
+
+    var3 = ctk.DoubleVar()
+    amount = ctk.CTkEntry(dialog3, placeholder_text= "Amount spent")
+    amount.grid(row=1, column=1)
+    value3 = amount.get()
+
+
+
+    dialog4 = ctk.CTkToplevel(root)
+    dialog4.title("Date")
+    dialog4.geometry("300x150")
+
+    var4 = ctk.StringVar()
+    note = ctk.CTkEntry(dialog4, placeholder_text= "Date of enxpense")
+    note.grid(row=1, column=1)
+    value4 = note.get()
 
 # Function to handle deleting an expense
 # TODO: Implement logic to remove expense from database/storage

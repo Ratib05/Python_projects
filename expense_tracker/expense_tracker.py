@@ -24,6 +24,9 @@ expenses_list = {
     "note": {"type": str, "required": False, "default": ""},
 }
 def add_expense():
+
+    # DATE DIALOG BOX
+
     dialog1 = ctk.CTkToplevel(root)
     dialog1.title("Date")
     dialog1.geometry("300x150")
@@ -33,13 +36,12 @@ def add_expense():
     date.grid(row=1, column=1)
     
     ok_btn = ctk.CTkButton(dialog1, text="OK", command=lambda:dialog1.destroy())
-    ok_btn.grid(row=2, column=2)
-
+    ok_btn.grid(row=2, column=1)
 
     root.wait_window(dialog1)
     value1 = date.get()
 
-    
+    # CATEGORY DIALOG BOX
 
     dialog2 = ctk.CTkToplevel(root)
     dialog2.title("Category")
@@ -47,48 +49,51 @@ def add_expense():
 
     var2 = ctk.StringVar()
     
-    # CHANGE TO DROPDOWN MENU
     category = ctk.CTkOptionMenu(dialog2, values=["Food", "Entertainment", "Transport", "Bills"], variable=var2)
-    category.grid(row=0, column=0)
+    category.grid(row=0, column=1)
     category.set("Food")
 
-    ok_btn = ctk.CTkButton(dialog1, text="OK", command=lambda:dialog2.destroy())
-    ok_btn.grid(row=2, column=2)
-
+    ok_btn = ctk.CTkButton(dialog2, text="OK", command=lambda:dialog2.destroy())
+    ok_btn.grid(row=2, column=1)
 
     root.wait_window(dialog2)
     value2 = category.get()
 
     # AMOUNT DIALOG BOX
+
     dialog3 = ctk.CTkToplevel(root)
     dialog3.title("Amount")
     dialog3.geometry("300x150")
 
     var3 = ctk.DoubleVar()
     amount = ctk.CTkEntry(dialog3, placeholder_text= "Amount spent")
-    amount.grid(row=1, column=1)
+    amount.grid(row=0, column=1)
 
-    ok_btn = ctk.CTkButton(dialog1, text="OK", command=lambda:dialog3.destroy())
-    ok_btn.grid(row=2, column=2)
+    ok_btn = ctk.CTkButton(dialog3, text="OK", command=lambda:dialog3.destroy())
+    ok_btn.grid(row=2, column=1)
 
     root.wait_window(dialog3)
     value3 = amount.get()
 
-
+    # NOTE DIALOG BOX
 
     dialog4 = ctk.CTkToplevel(root)
-    dialog4.title("Date")
+    dialog4.title("Note")
     dialog4.geometry("300x150")
 
     var4 = ctk.StringVar()
-    note = ctk.CTkEntry(dialog4, placeholder_text= "Date of enxpense")
+    note = ctk.CTkEntry(dialog4, placeholder_text= "Additional details: ")
     note.grid(row=1, column=1)
 
-    ok_btn = ctk.CTkButton(dialog1, text="OK", command=lambda:dialog4.destroy())
-    ok_btn.grid(row=2, column=2)
+    ok_btn = ctk.CTkButton(dialog4, text="OK", command=lambda:dialog4.destroy())
+    ok_btn.grid(row=2, column=1)
 
     root.wait_window(dialog4)
     value4 = note.get()
+
+    # ADD TO DATABASE LOGIC
+
+    
 
 # Function to handle deleting an expense
 # TODO: Implement logic to remove expense from database/storage
@@ -112,7 +117,7 @@ add = ctk.CTkButton(summary_section, text="Add expense", command=add_expense)
 add.grid(row=1, column=0, sticky="ew", padx=10, pady=10)  # Place in row 1, column 0
 
 # Button to manage expense categories (e.g., Food, Transport, etc.)
-manage = ctk.CTkButton(summary_section, text="manage categories", command=add_expense)
+manage = ctk.CTkButton(summary_section, text="manage categories")
 manage.grid(row=1, column=1, sticky="ew", padx=10, pady=10)  # Place in row 1, column 1
 
 # ===== SUMMARY SECTION =====

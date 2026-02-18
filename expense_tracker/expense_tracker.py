@@ -1,6 +1,7 @@
 # Import the customtkinter library for modern UI components
 import customtkinter as ctk
 import datetime as dt
+import sqlite3
 
 # Create the main application window
 root = ctk.CTk()
@@ -14,8 +15,20 @@ root.geometry("500x500")
 # Set the background color of the main window
 root.configure(fg_color="grey")  # Change this to your desired color
 
+conn = sqlite3.connect("expenses.db")
+cursor = conn.cursor()
+
+cursor.execute("""CREATE TABLE IF NOT EXISTS expenses (
+    id INTEGER PRIMARY KEY AUTOCREMENT,
+    date TEXT NOT NULL,
+    category TEXT NOT NULL,
+    amount REAL NOT NULL,
+    note TEXT )"""
+    )
+
+conn.commit()
+
 # Function to handle adding a new expense
-# TO DO: Implement logic to add expense to database/storage
 
 expenses_list = {
     "date": {"type": lambda s: s, "required": True},
@@ -93,7 +106,24 @@ def add_expense():
 
     # ADD TO DATABASE LOGIC
 
-    
+    raw_data = {
+        "date": value1,
+        "category": value2,
+        "amount": value3,
+        "note": value4
+    }
+
+    cursor.execute(
+        """ INSERT INTO expenses (date, category, amount, note) 
+        VALUES (?, ?, ?, ?) """, 
+        (raw_data[date],
+        expense[category],
+        expense[amount],
+        expense[note])
+    )
+
+    conn.commit()
+    print("Expense saved.")
 
 # Function to handle deleting an expense
 # TODO: Implement logic to remove expense from database/storage

@@ -19,7 +19,7 @@ conn = sqlite3.connect("expenses.db")
 cursor = conn.cursor()
 
 cursor.execute("""CREATE TABLE IF NOT EXISTS expenses (
-    id INTEGER PRIMARY KEY AUTOCREMENT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     date TEXT NOT NULL,
     category TEXT NOT NULL,
     amount REAL NOT NULL,
@@ -30,7 +30,7 @@ conn.commit()
 
 # Function to handle adding a new expense
 
-expenses_list = {
+expenses_schema = {
     "date": {"type": lambda s: s, "required": True},
     "category": {"type": str, "required": True},
     "amount": {"type": float, "required": True},
@@ -44,23 +44,20 @@ def add_expense():
     dialog1.title("Date")
     dialog1.geometry("300x150")
 
-    var1 = ctk.StringVar()
-    date = ctk.CTkEntry(dialog1, placeholder_text= "Date of enxpense")
+    date = ctk.CTkEntry(dialog1, placeholder_text= "YYYY-MM-DD")
     date.grid(row=1, column=1)
-    
+    value1 = date.get()
+
     ok_btn = ctk.CTkButton(dialog1, text="OK", command=lambda:dialog1.destroy())
     ok_btn.grid(row=2, column=1)
 
     root.wait_window(dialog1)
-    value1 = date.get()
 
     # CATEGORY DIALOG BOX
 
     dialog2 = ctk.CTkToplevel(root)
     dialog2.title("Category")
     dialog2.geometry("300x150")
-
-    var2 = ctk.StringVar()
     
     category = ctk.CTkOptionMenu(dialog2, values=["Food", "Entertainment", "Transport", "Bills"], variable=var2)
     category.grid(row=0, column=1)
@@ -68,9 +65,9 @@ def add_expense():
 
     ok_btn = ctk.CTkButton(dialog2, text="OK", command=lambda:dialog2.destroy())
     ok_btn.grid(row=2, column=1)
+    value2 = category.get()
 
     root.wait_window(dialog2)
-    value2 = category.get()
 
     # AMOUNT DIALOG BOX
 
@@ -78,15 +75,14 @@ def add_expense():
     dialog3.title("Amount")
     dialog3.geometry("300x150")
 
-    var3 = ctk.DoubleVar()
     amount = ctk.CTkEntry(dialog3, placeholder_text= "Amount spent")
     amount.grid(row=0, column=1)
 
     ok_btn = ctk.CTkButton(dialog3, text="OK", command=lambda:dialog3.destroy())
     ok_btn.grid(row=2, column=1)
+    value3 = amount.get()
 
     root.wait_window(dialog3)
-    value3 = amount.get()
 
     # NOTE DIALOG BOX
 
@@ -94,36 +90,36 @@ def add_expense():
     dialog4.title("Note")
     dialog4.geometry("300x150")
 
-    var4 = ctk.StringVar()
     note = ctk.CTkEntry(dialog4, placeholder_text= "Additional details: ")
     note.grid(row=1, column=1)
 
     ok_btn = ctk.CTkButton(dialog4, text="OK", command=lambda:dialog4.destroy())
     ok_btn.grid(row=2, column=1)
+    value4 = note.get()
 
     root.wait_window(dialog4)
-    value4 = note.get()
 
     # ADD TO DATABASE LOGIC
 
     raw_data = {
         "date": value1,
         "category": value2,
-        "amount": value3,
+        "amount": float(value3),
         "note": value4
     }
 
     cursor.execute(
         """ INSERT INTO expenses (date, category, amount, note) 
         VALUES (?, ?, ?, ?) """, 
-        (raw_data[date],
-        expense[category],
-        expense[amount],
-        expense[note])
+        (raw_data["date"],
+        raw_data["category"],
+        raw_data["amount"],
+        raw_data["note"])
     )
 
     conn.commit()
     print("Expense saved.")
+    display_expenses()
 
 # Function to handle deleting an expense
 # TODO: Implement logic to remove expense from database/storage
@@ -132,6 +128,23 @@ def del_expense():
 
 def select_expense():
     pass
+
+def display_expenses():
+    
+    for widget in expenses_list.winfo_children():
+        if widget.grid_info()["row"] > 0:
+            widget.destroy()
+
+    cursor.execute("SELECT date, category, amount, note FROM expenses ORDER BY date DESC")
+    rows = cursor.fetchall()
+
+    row_num = 1
+    for date, category, amount, note in rows:
+        ctk.CTkLabel(expenses_list, text=date, text_color="black").grid(row=row_num, column=0, padx=10, pady=5)
+        ctk.CTkLabel(expenses_list, text=category, text_color="black").grid(row=row_num, column=1, padx=10, pady=5)
+        ctk.CTkLabel(expenses_list, text=f"${amount:.2f}", text_color="black").grid(row=row_num, column=2, padx=10, pady=5)
+        ctk.CTkLabel(expenses_list, text=note, text_color="black").grid(row=row_num, column=3, padx=10, pady=5)
+        row_num += 1
 
 # ===== HEADER SECTION =====
 # Main title label with bold, larger font
@@ -202,4 +215,5 @@ graph_section = ctk.CTkFrame(root, fg_color="white")
 graph_section.grid(row=6, columnspan=3)
 
 # Start the application event loop
+display_expenses()
 root.mainloop()

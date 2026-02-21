@@ -46,12 +46,13 @@ def add_expense():
 
     date = ctk.CTkEntry(dialog1, placeholder_text= "YYYY-MM-DD")
     date.grid(row=1, column=1)
+
+    root.wait_window(dialog1)
+
     value1 = date.get()
 
     ok_btn = ctk.CTkButton(dialog1, text="OK", command=lambda:dialog1.destroy())
     ok_btn.grid(row=2, column=1)
-
-    root.wait_window(dialog1)
 
     # CATEGORY DIALOG BOX
 
@@ -59,15 +60,17 @@ def add_expense():
     dialog2.title("Category")
     dialog2.geometry("300x150")
     
+    var2 = ctk.StringVar()
     category = ctk.CTkOptionMenu(dialog2, values=["Food", "Entertainment", "Transport", "Bills"], variable=var2)
     category.grid(row=0, column=1)
     category.set("Food")
 
-    ok_btn = ctk.CTkButton(dialog2, text="OK", command=lambda:dialog2.destroy())
-    ok_btn.grid(row=2, column=1)
+    root.wait_window(dialog2)
+
     value2 = category.get()
 
-    root.wait_window(dialog2)
+    ok_btn = ctk.CTkButton(dialog1, text="OK", command=lambda:dialog1.destroy())
+    ok_btn.grid(row=2, column=1)
 
     # AMOUNT DIALOG BOX
 
@@ -78,11 +81,12 @@ def add_expense():
     amount = ctk.CTkEntry(dialog3, placeholder_text= "Amount spent")
     amount.grid(row=0, column=1)
 
-    ok_btn = ctk.CTkButton(dialog3, text="OK", command=lambda:dialog3.destroy())
-    ok_btn.grid(row=2, column=1)
+    root.wait_window(dialog3)
+
     value3 = amount.get()
 
-    root.wait_window(dialog3)
+    ok_btn = ctk.CTkButton(dialog3, text="OK", command=lambda:dialog3.destroy())
+    ok_btn.grid(row=2, column=1)
 
     # NOTE DIALOG BOX
 
@@ -93,11 +97,12 @@ def add_expense():
     note = ctk.CTkEntry(dialog4, placeholder_text= "Additional details: ")
     note.grid(row=1, column=1)
 
-    ok_btn = ctk.CTkButton(dialog4, text="OK", command=lambda:dialog4.destroy())
-    ok_btn.grid(row=2, column=1)
+    root.wait_window(dialog4)
+
     value4 = note.get()
 
-    root.wait_window(dialog4)
+    ok_btn = ctk.CTkButton(dialog4, text="OK", command=lambda:dialog4.destroy())
+    ok_btn.grid(row=2, column=1)
 
     # ADD TO DATABASE LOGIC
 

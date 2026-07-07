@@ -1,0 +1,1 @@
+# TODO incorporate generator and strength checker
